@@ -1,23 +1,22 @@
+import React, { Component, lazy } from "react";
+import { Link, Route, Switch } from "react-router-dom";
+import asyncComponent from "./hoc/asyncComponent/asyncComponent";
 
-import React, { Component, lazy } from 'react';
-import { Link, Route } from 'react-router-dom';
+import Users from "./containers/Users";
 
-import Users from './containers/Users';
-
-const Pizza = lazy(() => import('./containers/Pizza'));
+const asyncPizza = lazy(() => import("./containers/Pizza"));
 
 class App extends Component {
   render() {
     return (
       <div>
         <div>
-          <Link to="/">Users</Link>
-          <Link to="/pizza">Pizza</Link>
+          <Link to="/">Users</Link> | <Link to="/pizza">Pizza</Link>
         </div>
-        <Route to="/pizza" component={Pizza} />
-        <Route to="/" exact component={Users} />
+        <Route exact path="/" component={Users} />
+        <Route path="/pizza" component={asyncComponent(asyncPizza)} />
       </div>
-    )
+    );
   }
 }
 
