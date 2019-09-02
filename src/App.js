@@ -11,7 +11,8 @@ class App extends Component {
     return (
       <div>
         <div>
-          <Link to="/">Users</Link> | <Link to="/pizza">Pizza</Link>
+          <Link to="/"><i className="fa fa-check" aria-hidden="true"></i>Users</Link>
+            | <Link to="/pizza">Pizza</Link>
         </div>
         <Route exact path="/" component={Users} />
         <Route path="/pizza" component={asyncComponent(asyncPizza)} />
