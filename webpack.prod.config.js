@@ -1,10 +1,9 @@
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-  devtool: 'cheap-module-source-map',
+  devtool: 'cheap-module-eval-source-map',
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -22,30 +21,19 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/
       },
-      {
-        test: /\.css$/,
-        exclude: /node_modules/,
+      { 
+        test: /\.css?$/,
         use: [
-          { loader: 'style-loader' },
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              modules: {
-                localIdentName: '[name]__[local]__[hash:base64:5]'
-              },
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugins: () => [
-                autoprefixer()
-              ]
-            }
-          }
+          { loader: "style-loader" },
+          { loader: "css-loader" },
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" },
+          { loader: "sass-loader" }
         ]
       },
       {
@@ -62,7 +50,6 @@ module.exports = {
       template: __dirname + '/src/index.html',
       filename: 'index.html',
       inject: 'body'
-    }),
-    new UglifyJsPlugin()
+    })
   ]
 };
